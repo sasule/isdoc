@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Adawolfa\ISDOC\Schema;
+
 use Adawolfa\ISDOC\Arrayable;
 use Adawolfa\ISDOC\Map;
 use Adawolfa\ISDOC\Restriction;
@@ -12,47 +14,47 @@ use Nette\SmartObject;
 /**
  * Document root element, subtype is stored in DocumentType element.
  *
- * @property int                                     $documentType
- * @property string|null                             $subDocumentType
- * @property string|null                             $subDocumentTypeOrigin
- * @property string|null                             $targetConsolidator
- * @property string|null                             $clientOnTargetConsolidator
- * @property string|null                             $clientBankAccount
- * @property string                                  $id
- * @property string                                  $uuid
- * @property bool|null                               $egovFlag
- * @property string|null                             $isds_id
- * @property string|null                             $file
- * @property string|null                             $referenceNumber
- * @property Invoice\EgovClassifiers|null            $egovClassifiers
- * @property string|null                             $issuingSystem
- * @property DateTimeInterface                       $issueDate
- * @property DateTimeInterface|null                  $taxPointDate
- * @property bool                                    $vatApplicable
- * @property Invoice\Note                            $electronicPossibilityAgreement
- * @property Invoice\Note|null                       $note
- * @property string                                  $localCurrencyCode
- * @property string|null                             $foreignCurrencyCode
- * @property string                                  $currRate
- * @property string                                  $refCurrRate
- * @property Invoice\AccountingSupplierParty         $accountingSupplierParty
- * @property Invoice\SellerSupplierParty|null        $sellerSupplierParty
- * @property Invoice\AccountingCustomerParty|null    $accountingCustomerParty
- * @property Invoice\AnonymousCustomerParty|null     $anonymousCustomerParty
- * @property Invoice\BuyerCustomerParty|null         $buyerCustomerParty
- * @property Invoice\OrderReferences|null            $orderReferences
- * @property Invoice\DeliveryNoteReferences|null     $deliveryNoteReferences
+ * @property int $documentType
+ * @property string|null $subDocumentType
+ * @property string|null $subDocumentTypeOrigin
+ * @property string|null $targetConsolidator
+ * @property string|null $clientOnTargetConsolidator
+ * @property string|null $clientBankAccount
+ * @property string $id
+ * @property string $uuid
+ * @property bool|null $egovFlag
+ * @property string|null $isds_id
+ * @property string|null $file
+ * @property string|null $referenceNumber
+ * @property Invoice\EgovClassifiers|null $egovClassifiers
+ * @property string|null $issuingSystem
+ * @property DateTimeInterface $issueDate
+ * @property DateTimeInterface|null $taxPointDate
+ * @property bool $vatApplicable
+ * @property Invoice\Note $electronicPossibilityAgreement
+ * @property Invoice\Note|null $note
+ * @property string $localCurrencyCode
+ * @property string|null $foreignCurrencyCode
+ * @property string $currRate
+ * @property string $refCurrRate
+ * @property Invoice\AccountingSupplierParty $accountingSupplierParty
+ * @property Invoice\SellerSupplierParty|null $sellerSupplierParty
+ * @property Invoice\AccountingCustomerParty|null $accountingCustomerParty
+ * @property Invoice\AnonymousCustomerParty|null $anonymousCustomerParty
+ * @property Invoice\BuyerCustomerParty|null $buyerCustomerParty
+ * @property Invoice\OrderReferences|null $orderReferences
+ * @property Invoice\DeliveryNoteReferences|null $deliveryNoteReferences
  * @property Invoice\OriginalDocumentReferences|null $originalDocumentReferences
- * @property Invoice\ContractReferences|null         $contractReferences
- * @property Invoice\Delivery|null                   $delivery
- * @property Invoice\InvoiceLines                    $invoiceLines
- * @property Invoice\NonTaxedDeposits|null           $nonTaxedDeposits
- * @property Invoice\TaxedDeposits|null              $taxedDeposits
- * @property Invoice\TaxTotal                        $taxTotal
- * @property Invoice\LegalMonetaryTotal              $legalMonetaryTotal
- * @property Invoice\PaymentMeans|null               $paymentMeans
- * @property Invoice\SupplementsList|null            $supplementsList
- * @property string                                  $version
+ * @property Invoice\ContractReferences|null $contractReferences
+ * @property Invoice\Delivery|null $delivery
+ * @property Invoice\InvoiceLines $invoiceLines
+ * @property Invoice\NonTaxedDeposits|null $nonTaxedDeposits
+ * @property Invoice\TaxedDeposits|null $taxedDeposits
+ * @property Invoice\TaxTotal $taxTotal
+ * @property Invoice\LegalMonetaryTotal $legalMonetaryTotal
+ * @property Invoice\PaymentMeans|null $paymentMeans
+ * @property Invoice\SupplementsList|null $supplementsList
+ * @property string $version
  */
 class Invoice implements Arrayable
 {
@@ -134,11 +136,11 @@ class Invoice implements Arrayable
 
 	/** VAT is applicable. */
 	#[Map('VATApplicable')]
-	private bool $vatApplicable;
+	private ?bool $vatApplicable = false;
 
 	/** Reference to agreement about acceptance of electronic invoices. */
 	#[Map('ElectronicPossibilityAgreementReference')]
-	private Invoice\Note $electronicPossibilityAgreement;
+	private ?Invoice\Note $electronicPossibilityAgreement = null;
 
 	/** Note. */
 	#[Map('Note')]
@@ -233,21 +235,22 @@ class Invoice implements Arrayable
 	private string $version;
 
 	public function __construct(
-		int $documentType,
-		string $id,
-		string $uuid,
-		DateTimeInterface $issueDate,
-		bool $vatApplicable,
-		Invoice\Note $electronicPossibilityAgreement,
-		string $localCurrencyCode,
-		string $currRate,
-		string $refCurrRate,
+		int                             $documentType,
+		string                          $id,
+		string                          $uuid,
+		DateTimeInterface               $issueDate,
+		bool                            $vatApplicable,
+		Invoice\Note                    $electronicPossibilityAgreement,
+		string                          $localCurrencyCode,
+		string                          $currRate,
+		string                          $refCurrRate,
 		Invoice\AccountingSupplierParty $accountingSupplierParty,
-		Invoice\InvoiceLines $invoiceLines,
-		Invoice\TaxTotal $taxTotal,
-		Invoice\LegalMonetaryTotal $legalMonetaryTotal,
-		string $version
-	) {
+		Invoice\InvoiceLines            $invoiceLines,
+		Invoice\TaxTotal                $taxTotal,
+		Invoice\LegalMonetaryTotal      $legalMonetaryTotal,
+		string                          $version
+	)
+	{
 		$this->setDocumentType($documentType);
 		$this->setId($id);
 		$this->setUuid($uuid);
@@ -456,9 +459,9 @@ class Invoice implements Arrayable
 		return $this->vatApplicable;
 	}
 
-	public function setVatApplicable(bool $vatApplicable): self
+	public function setVatApplicable(?bool $vatApplicable): self
 	{
-		$this->vatApplicable = $vatApplicable;
+		$this->vatApplicable = (bool)$vatApplicable;
 		return $this;
 	}
 
@@ -467,7 +470,7 @@ class Invoice implements Arrayable
 		return $this->electronicPossibilityAgreement;
 	}
 
-	public function setElectronicPossibilityAgreement(Invoice\Note $electronicPossibilityAgreement): self
+	public function setElectronicPossibilityAgreement(?Invoice\Note $electronicPossibilityAgreement): self
 	{
 		$this->electronicPossibilityAgreement = $electronicPossibilityAgreement;
 		return $this;
