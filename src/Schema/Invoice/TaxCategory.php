@@ -7,6 +7,7 @@ use Adawolfa\ISDOC\Map;
 use Adawolfa\ISDOC\Restriction;
 use Adawolfa\ISDOC\ToArray;
 use Nette\SmartObject;
+use Nette\Utils\Strings;
 
 /**
  * Information about a tax rate.
@@ -50,6 +51,7 @@ class TaxCategory implements Arrayable
 
 	public function setPercent(string $percent): self
 	{
+		$percent = Strings::trim($percent);
 		Restriction::decimal($percent);
 		$this->percent = $percent;
 		return $this;
